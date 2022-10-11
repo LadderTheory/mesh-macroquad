@@ -1,5 +1,3 @@
-use std::f32::consts::E;
-
 use rand::Rng;
 
 use crate::math::{Vector2D};

@@ -2,6 +2,7 @@ use crate::particle::Particle;
 use crate::line::Line;
 use crate::math::Vector2D;
 
+#[derive(Clone)]
 pub struct MeshField {
     particles: Vec<Particle>,
     lines: Vec<Line>,
@@ -10,7 +11,7 @@ pub struct MeshField {
 }
 
 impl MeshField {
-    pub fn new(particle_count: usize, size: Vector2D, max_line_len: f32) -> Self {
+    pub fn new_random(particle_count: usize, size: Vector2D, max_line_len: f32) -> Self {
         let particles = (0..particle_count)
             .map(|_| Particle::new_random(size))
             .collect();
@@ -23,6 +24,10 @@ impl MeshField {
         }
     }
 
+    pub fn set_particles(&mut self, particles: Vec<Particle>) {
+        self.particles = particles;
+    }
+
     pub fn particles(&self) -> Vec<Particle> {
         self.particles.clone()
     }
@@ -33,14 +38,18 @@ impl MeshField {
 
     pub fn update_all(&mut self) {
         self.update_particles();
-        self.lines = Self::connections(self.particles.clone(), self.max_line_len)
+        self.update_lines();
     }
 
-    fn update_particles(&mut self) {
+    pub fn update_particles(&mut self) {
         for h in 0..self.particles.len() {
             self.particles[h].field_size = self.size;
             self.particles[h].update();
         }
+    }
+
+    pub fn update_lines(&mut self) {
+        self.lines = Self::connections(self.particles.clone(), self.max_line_len);
     }
 
     pub fn connections(particles: Vec<Particle>, max_line_len: f32) -> Vec<Line> {

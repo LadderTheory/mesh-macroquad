@@ -28,7 +28,7 @@ impl Particle {
         Particle {
             position: Vector2D::new(rng.gen::<f32>() * field_size.x, rng.gen::<f32>() * field_size.y),
             //position: Vector2D { x: 100.0, y: 100.0 },
-            velocity: Vector2D::new(1.0 - rng.gen::<f32>() * 2.0, 1.0 - rng.gen::<f32>() * 2.0),
+            velocity: Vector2D::new(3.0 - rng.gen::<f32>() * 6.0, 3.0 - rng.gen::<f32>() * 6.0),
             radius: 2.0,
             field_size,
         }
